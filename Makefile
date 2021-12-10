@@ -1,0 +1,39 @@
+export GOPATH
+export CGO_ENABLED=0
+export GO111MODULE=on
+
+VERSION ?= $(shell git describe --tags --always --dirty)
+RELEASE_VERSION ?= $(version)
+DIR_BIN = ./bin
+NAME = waitfor
+
+default: build
+
+build: vet test compile
+
+install:
+	go get
+
+compile:
+	go build -v -o ${DIR_BIN}/${NAME} \
+	-ldflags "-X main.version=${VERSION}" \
+	./waitfor/main.go
+
+test:
+	go test ./...
+
+cover:
+	go test -race -coverprofile=coverage.txt -covermode=atomic ... && \
+	curl -s https://codecov.io/bash | bash
+
+doc:
+	godoc -http=:6060 -index
+
+fmt:
+	go fmt ./...
+
+lint:
+	revive -config revive.toml -formatter stylish ./...
+
+vet:
+	go vet ./...
