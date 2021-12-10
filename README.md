@@ -1,12 +1,36 @@
 # cli
 Command Line Interface for waitfor
 
-### Quick start
+## Installation
+
+### Binary
+
+You can download the latest binaries from [here](https://github.com/go-waitfor/cli/releases).
+
+### Source
+
+#### Go < 1.17
+
+```shell
+go get -u github.com/go-waitfor/cli/waitfor@latest
+```
+
+#### Go >= 1.17
+```shell
+go install github.com/go-waitfor/cli/waitfor@latest
+```
+
+### SSH
+```shell
+curl https://raw.githubusercontent.com/go-waitfor/waitfor/master/install.sh | sudo sh
+```
+
+## Quick start
 ```bash
     waitfor -r postgres://locahost:5432/mydb?user=user&password=test -r http://myservice:8080 npm start
 ```
 
-### Options
+## Options
 ```bash
 NAME:
    waitfor - Tests and waits on the availability of a remote resource
