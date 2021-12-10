@@ -22,6 +22,15 @@ builds:
       - amd64
       - arm64
 
+archives:
+  - name_template: 'waitfor_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    # Can be used to change the archive formats for specific GOOSs.
+    # Most common use case is to archive as zip on Windows.
+    # Default is empty.
+    format_overrides:
+      - goos: windows
+        format: zip
+
 checksum:
   name_template: '{{ .ProjectName }}_checksums.txt'
 
