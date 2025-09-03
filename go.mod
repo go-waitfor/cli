@@ -8,9 +8,9 @@ require (
 	github.com/go-waitfor/waitfor v1.0.0
 	github.com/go-waitfor/waitfor-fs v1.0.0
 	github.com/go-waitfor/waitfor-http v1.0.0
-	github.com/go-waitfor/waitfor-mongodb v1.0.0
-	github.com/go-waitfor/waitfor-mysql v1.0.0
-	github.com/go-waitfor/waitfor-postgres v1.0.0
+	github.com/go-waitfor/waitfor-mongodb v1.1.0
+	github.com/go-waitfor/waitfor-mysql v1.1.0
+	github.com/go-waitfor/waitfor-postgres v1.1.0
 	github.com/go-waitfor/waitfor-proc v1.0.0
 	github.com/urfave/cli/v2 v2.27.7
 )
