@@ -3,13 +3,8 @@
 # Copyright Tim Voronov 2020
 version=$(curl -sI https://github.com/go-waitfor/cli/releases/latest | grep Location | awk -F"/" '{ printf "%s", $NF }' | tr -d '\r')
 if [ ! "$version" ]; then
-    echo "Failed while attempting to install waitfor. Please manually install:"
-    echo ""
-    echo "1. Open your web browser and go to https://github.com/go-waitfor/cli/releases"
-    echo "2. Download the latest release for your platform."
-    echo "3. chmod +x ./waitfor"
-    echo "4. mv ./waitfor /usr/local/bin"
-    exit 1
+    echo "Unable to detect latest version, falling back to 'latest'"
+    version="latest"
 fi
 
 hasCli() {
@@ -98,7 +93,11 @@ getPackage() {
         rm "$targetFile"
     fi
 
-    baseUrl=https://github.com/go-waitfor/cli/releases/download/$version
+    if [ "$version" = "latest" ]; then
+        baseUrl=https://github.com/go-waitfor/cli/releases/latest/download
+    else
+        baseUrl=https://github.com/go-waitfor/cli/releases/download/$version
+    fi
     url=$baseUrl/waitfor$suffix.tar.gz
     echo "Downloading package $url as $targetFile"
 
