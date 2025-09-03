@@ -102,6 +102,17 @@ export WAITFOR_MAX_INTERVAL=30
 waitfor npm start
 ```
 
+### Verbose Output
+Enable detailed progress information during resource checks:
+```bash
+# Show progress information while waiting for resources
+waitfor --verbose -r postgres://localhost:5432/db -r http://localhost:8080 npm start
+
+# Or use environment variable
+export WAITFOR_VERBOSE=true
+waitfor -r http://localhost:8080 ./start-app.sh
+```
+
 ## Configuration
 
 ### Command Line Options
@@ -112,6 +123,7 @@ waitfor npm start
 | `--attempts` | `-a` | Number of connection attempts | `5` | `WAITFOR_ATTEMPTS` |
 | `--interval` | - | Initial interval between attempts (seconds) | `5` | `WAITFOR_INTERVAL` |
 | `--max-interval` | - | Maximum interval between attempts (seconds) | `60` | `WAITFOR_MAX_INTERVAL` |
+| `--verbose` | - | Enable verbose progress output | `false` | `WAITFOR_VERBOSE` |
 | `--help` | `-h` | Show help | - | - |
 | `--version` | `-v` | Show version | - | - |
 
@@ -134,6 +146,7 @@ GLOBAL OPTIONS:
    --attempts value, -a value  amount of attempts (default: 5) [$WAITFOR_ATTEMPTS]
    --interval value            interval between attempts (sec) (default: 5) [$WAITFOR_INTERVAL]
    --max-interval value        maximum interval between attempts (sec) (default: 60) [$WAITFOR_MAX_INTERVAL]
+   --verbose                   enable verbose progress output (default: false) [$WAITFOR_VERBOSE]
    --help, -h                  show help (default: false)
    --version, -v               print the version (default: false)
 
