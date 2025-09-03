@@ -11,6 +11,7 @@ import (
 	"github.com/go-waitfor/waitfor-proc"
 	"github.com/urfave/cli/v2"
 	"os"
+	"time"
 )
 
 var version string
@@ -48,6 +49,11 @@ func main() {
 				EnvVars: []string{"WAITFOR_MAX_INTERVAL"},
 				Value:   60,
 			},
+			&cli.BoolFlag{
+				Name:    "verbose",
+				Usage:   "enable verbose progress output",
+				EnvVars: []string{"WAITFOR_VERBOSE"},
+			},
 		},
 		Action: func(ctx *cli.Context) error {
 			if ctx.NArg() == 0 {
@@ -77,12 +83,42 @@ func main() {
 				program.Args = args[1:]
 			}
 
-			out, err := runner.Run(
-				ctx.Context,
-				program,
+			// Build waitfor options
+			options := []waitfor.Option{
 				waitfor.WithAttempts(ctx.Uint64("attempts")),
 				waitfor.WithInterval(ctx.Uint64("interval")),
 				waitfor.WithMaxInterval(ctx.Uint64("max-interval")),
+			}
+
+			// If verbose mode is enabled, show progress
+			if ctx.Bool("verbose") {
+				fmt.Printf("waitfor: checking %d resource(s) with %d max attempts\n", len(program.Resources), ctx.Uint64("attempts"))
+				for i, resource := range program.Resources {
+					fmt.Printf("waitfor: [%d/%d] checking %s\n", i+1, len(program.Resources), resource)
+				}
+				fmt.Printf("waitfor: retry interval: %ds, max interval: %ds\n", ctx.Uint64("interval"), ctx.Uint64("max-interval"))
+				fmt.Println("waitfor: starting resource availability tests...")
+				
+				start := time.Now()
+				
+				// Test resources first to show progress
+				err := runner.Test(ctx.Context, program.Resources, options...)
+				
+				duration := time.Since(start)
+				
+				if err != nil {
+					fmt.Printf("waitfor: resource tests failed after %v: %v\n", duration.Round(time.Millisecond), err)
+					return err
+				}
+				
+				fmt.Printf("waitfor: all resources available after %v\n", duration.Round(time.Millisecond))
+				fmt.Printf("waitfor: executing command: %s\n", program.Executable)
+			}
+
+			out, err := runner.Run(
+				ctx.Context,
+				program,
+				options...,
 			)
 
 			if out != nil {
