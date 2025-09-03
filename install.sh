@@ -55,11 +55,15 @@ getPackage() {
     platform=""
     case $uname in
     "Darwin")
-    platform="_darwin"
-    ;;
+        platform="_darwin"
+        ;;
     "Linux")
-    platform="_linux"
-    ;;
+        platform="_linux"
+        ;;
+    *)
+        echo "Platform $uname is not supported. Exiting"
+        exit 1
+        ;;
     esac
 
     uname_arch=$(uname -m)
