@@ -5,19 +5,19 @@ go 1.23.0
 toolchain go1.24.6
 
 require (
-	github.com/go-waitfor/waitfor v1.0.0
-	github.com/go-waitfor/waitfor-fs v1.0.0
-	github.com/go-waitfor/waitfor-http v1.0.0
+	github.com/go-waitfor/waitfor v1.1.0
+	github.com/go-waitfor/waitfor-fs v1.1.0
+	github.com/go-waitfor/waitfor-http v1.1.0
 	github.com/go-waitfor/waitfor-mongodb v1.1.0
 	github.com/go-waitfor/waitfor-mysql v1.1.0
 	github.com/go-waitfor/waitfor-postgres v1.1.0
-	github.com/go-waitfor/waitfor-proc v1.0.0
+	github.com/go-waitfor/waitfor-proc v1.1.0
 	github.com/urfave/cli/v2 v2.27.7
 )
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
-	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
+	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.7 // indirect
 	github.com/go-sql-driver/mysql v1.9.3 // indirect
 	github.com/golang/snappy v1.0.0 // indirect
